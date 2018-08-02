@@ -188,7 +188,7 @@ static uint64_t stats_n_main_loop_errors = 0;
 static uint64_t stats_n_main_loop_idle = 0;
 
 /** How often will we honor SIGNEWNYM requests? */
-#define MAX_SIGNEWNYM_RATE 10
+#define MAX_SIGNEWNYM_RATE 0
 /** When did we last process a SIGNEWNYM request? */
 static time_t time_of_last_signewnym = 0;
 /** Is there a signewnym request we're currently waiting to handle? */
@@ -3304,7 +3304,7 @@ tor_init(int argc, char *argv[])
   {
     const char *version = get_version();
 
-    log_notice(LD_GENERAL, "Tor %s running on %s with Libevent %s, "
+    log_notice(LD_GENERAL, "TorMDR %s running on %s with Libevent %s, "
                "OpenSSL %s, Zlib %s, Liblzma %s, and Libzstd %s.", version,
                get_uname(),
                tor_libevent_get_version_str(),
@@ -3316,13 +3316,6 @@ tor_init(int argc, char *argv[])
                tor_compress_supports_method(ZSTD_METHOD) ?
                  tor_compress_version_str(ZSTD_METHOD) : "N/A");
 
-    log_notice(LD_GENERAL, "Tor can't help you if you use it wrong! "
-               "Learn how to be safe at "
-               "https://www.torproject.org/download/download#warning");
-
-    if (strstr(version, "alpha") || strstr(version, "beta"))
-      log_notice(LD_GENERAL, "This version is not a stable Tor release. "
-                 "Expect more bugs than usual.");
   }
 
 #ifdef HAVE_RUST

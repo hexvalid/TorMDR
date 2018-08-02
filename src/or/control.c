@@ -3690,12 +3690,6 @@ handle_control_attachstream(control_connection_t *conn, uint32_t len,
                     conn);
     return 0;
   }
-  /* Is this a single hop circuit? */
-  if (circ && (circuit_get_cpath_len(circ)<2 || hop==1)) {
-    connection_write_str_to_buf(
-               "551 Can't attach stream to this one-hop circuit.\r\n", conn);
-    return 0;
-  }
 
   if (circ && hop>0) {
     /* find this hop in the circuit, and set cpath */
